@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Service } from '../../services/service';
-import { pipe ,takeUntil ,tap , catchError , of , finalize , Subject , } from 'rxjs';
+import { pipe, takeUntil, tap, catchError, of, finalize, Subject, } from 'rxjs';
 import { roomCard } from '../../models/model.interface';
 
 @Component({
@@ -14,7 +14,7 @@ export class Rooms implements OnInit, OnDestroy {
   public toDoData: roomCard[] | undefined;
   public hasError: boolean = false;
   public destroy$ = new Subject();
-  
+
 
 
   ngOnInit() {
@@ -22,7 +22,7 @@ export class Rooms implements OnInit, OnDestroy {
       .roomsAll()
       .pipe(
         takeUntil(this.destroy$),
-         tap((data) => {
+        tap((data) => {
           this.toDoData = data as unknown as roomCard[];
         }),
         catchError(() => {
@@ -34,7 +34,7 @@ export class Rooms implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-       
+
   }
   ngOnDestroy(): void {
     this.destroy$.next;

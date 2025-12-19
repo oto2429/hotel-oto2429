@@ -1,33 +1,28 @@
-@if (hasError) {
-  <p>მოხდა შეცდომა მონაცემების ჩატვირთვისას</p>
-}
-
 @if (toDoData) {
-  <div class="rooms-container">
-    @for (room of toDoData; track room.id) {
-      <div class="room-card">
+<div class="rooms-wrapper">
+    <div class="rooms-container">
+        @for (room of toDoData; track room.id) {
+        <div class="room-card">
 
-        <!-- ფოტო -->
-        <img
-          class="room-img"
-          [src]="room.images?.[0]?.source"
-          [alt]="room.name"
-        />
+            <div class="room-image">
+                <img [src]="room.images?.[0]?.source" [alt]="room.name" loading="lazy" />
+            </div>
 
-        <!-- სახელი -->
-        <h3>{{ room.name }}</h3>
 
-        <!-- ფასი -->
-        <p class="price">₾ {{ room.pricePerNight }} / night</p>
+            <div class="room-content">
+                <h3 class="room-title">{{ room.name }}</h3>
 
-        <!-- ღილაკი -->
-        <button class="book-btn">
-          Book Now
-        </button>
+                <div class="price-section">
+                    <span class="price">₾ {{ room.pricePerNight }}</span>
+                    <span class="per-night">/ night</span>
+                </div>
 
-      </div>
-    }
-  </div>
-} @else {
-  <p>ჩატვირთვა...</p>
+                <button class="book-btn">
+                    Book Now
+                </button>
+            </div>
+        </div>
+        }
+    </div>
+</div>
 }
