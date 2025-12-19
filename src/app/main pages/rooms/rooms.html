@@ -1,1 +1,22 @@
-<p>rooms works!</p>
+@if (hasError) {
+  <div>მოხდა შეცდომა მონაცემების ჩატვირთვისას</div>
+}
+
+@if (toDoData) {
+  @for (room of toDoData; track room.id) {
+    <div class="room-card">
+
+      <h3>{{ room.name }}</h3>
+      <p>Price per night: {{ room.pricePerNight }} ₾</p>
+
+      <div class="images">
+        @for (img of room.images; track img.id) {
+          <img [src]="img.source" [alt]="room.name">
+        }
+      </div>
+
+    </div>
+  }
+} @else {
+  <div>ჩატვირთვა...</div>
+}
