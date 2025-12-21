@@ -1,124 +1,122 @@
 .footer {
-  background: linear-gradient(180deg, #f1f5ff 0%, #ffffff 100%);
   color: #000;
   font-family: 'Arial', sans-serif;
   padding: 50px 25px;
   border-top: 2px solid #e0e6f5;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
 
-  .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 35px;
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+/* Top section: About + Links + Services + Contact */
+.footer-top {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.footer-about,
+.footer-links,
+.footer-services,
+.footer-contact {
+  h3, h4 {
+    color: #1e3a8a;
+    margin-bottom: 10px;
+    font-weight: 700;
   }
 
-  /* Top section: About + Links + Services + Contact */
-  .footer-top {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-
-    .footer-about,
-    .footer-links,
-    .footer-services,
-    .footer-contact {
-      h3, h4 {
-        color: #1e3a8a;
-        margin-bottom: 10px;
-        font-weight: 700;
-      }
-
-      p,
-      li span {
-        color: #444;
-        font-size: 14px;
-        line-height: 1.6;
-      }
-
-      ul {
-        list-style: none;
-        padding: 0;
-
-        li {
-          margin-bottom: 8px;
-
-          a {
-            color: #333;
-            text-decoration: none;
-            transition: 0.3s;
-
-            &.active,
-            &:hover {
-              color: #1e3a8a;
-              padding-left: 3px;
-            }
-          }
-        }
-      }
-    }
+  p,
+  li span {
+    color: #444;
+    font-size: 14px;
+    line-height: 1.6;
   }
 
-  /* Social icons */
-  .footer-middle {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
+  ul {
+    list-style: none;
+    padding: 0;
 
-    a {
-      display: inline-block;
-      transition: 0.3s;
+    li {
+      margin-bottom: 8px;
 
-      img {
-        width: 32px;
-        height: 32px;
-        filter: grayscale(0.2);
+      a {
+        color: #333;
+        text-decoration: none;
         transition: 0.3s;
-      }
 
-      &:hover {
-        transform: translateY(-3px);
-
-        img {
-          filter: grayscale(0);
+        &.active,
+        &:hover {
+          color: #1e3a8a;
+          padding-left: 3px;
         }
       }
     }
   }
+}
 
-  /* Bottom section: copyright */
-  .footer-bottom {
-    text-align: center;
-    font-size: 13px;
-    color: #666;
-    border-top: 1px solid #e0e0e0;
-    padding-top: 12px;
-  }
+/* Social icons */
+.footer-middle {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.footer-middle a {
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.footer-middle img {
+  width: 32px;
+  height: 32px;
+  filter: grayscale(0.2);
+  transition: 0.3s;
+}
+
+.footer-middle a:hover {
+  transform: translateY(-3px);
+}
+
+.footer-middle a:hover img {
+  filter: grayscale(0);
+}
+
+/* Bottom section: copyright */
+.footer-bottom {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 12px;
 }
 
 /* ---------------- Responsive ---------------- */
 
-/* Tablet (4 → 2 სექცია) */
+/* Tablet და მცირე დესკტოპი (4 → 2-2 სექცია) */
 @media (max-width: 992px) {
   .footer {
     padding: 40px 20px;
   }
 
   .footer-top {
-    grid-template-columns: repeat(2, 1fr) !important; /* ძალით გადავაწერთ */
+    grid-template-columns: repeat(2, 1fr); /* 2-2 ფორმატში */
     gap: 30px;
     row-gap: 40px;
   }
 
-  /* ყველა სექციას ვასწორებთ ტაბლეტზე */
   .footer-about,
   .footer-links,
   .footer-services,
   .footer-contact {
-    text-align: center;
+    text-align: left;
   }
 
-  /* ლინკების გასწორება ცენტრში */
   .footer-links ul,
   .footer-services ul {
     display: inline-block;
@@ -130,19 +128,25 @@
   }
 }
 
-/* Mobile (2 → 1 სექცია) */
+/* Mobile (2 → 2-2 სექცია) */
 @media (max-width: 576px) {
   .footer {
     padding: 30px 15px;
   }
 
   .footer-top {
-    grid-template-columns: 1fr !important; /* ძალით გადავაწერთ */
-    gap: 35px;
+    grid-template-columns: repeat(2, 1fr); /* 2-2 ფორმატი შენარჩუნებულია */
+    gap: 25px;
     text-align: center;
   }
 
-  /* ლინკების სიების ცენტრში გასწორება */
+  .footer-about,
+  .footer-links,
+  .footer-services,
+  .footer-contact {
+    text-align: center;
+  }
+
   .footer-links ul,
   .footer-services ul {
     display: inline-block;
@@ -170,7 +174,7 @@
   }
 }
 
-/* დამატებითი მობაილის ადაპტაცია პატარა ეკრანებისთვის */
+/* დამატებითი მობაილის ადაპტაცია ძალიან პატარა ეკრანებისთვის */
 @media (max-width: 360px) {
   .footer {
     padding: 25px 10px;

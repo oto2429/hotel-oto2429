@@ -14,4 +14,13 @@ export class Service {
       "https://hotelbooking.stepprojects.ge/api/Rooms/GetAll"
     )
   }
+
+  public roomsById():Observable<Rooms> {
+    return this.http.get<Rooms>(
+      "https://hotelbooking.stepprojects.ge/api/Rooms/GetRoom/${id}"
+    )
+  }
+
+
+
 }

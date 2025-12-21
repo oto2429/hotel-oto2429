@@ -1,0 +1,266 @@
+// 🎨 Variables
+$btn-bg: #ff2ebc;
+$overlay-top: rgba(0, 0, 0, .55);
+$overlay-bottom: rgba(0, 0, 0, .25);
+
+
+
+// 🌍 HERO SECTION
+.hero {
+  width: 100%;
+  min-height: 420px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: url('/imgs/slide-bg.jpg') center / cover no-repeat;
+  overflow: hidden;
+
+  // subtle zoom მხოლოდ დიდ ეკრანებზე!
+  animation: heroZoom 14s ease-in-out infinite alternate;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, $overlay-top, $overlay-bottom);
+  }
+
+  .hero-content {
+    position: relative;
+    color: #fff;
+    text-align: center;
+    z-index: 2;
+
+    h1 {
+      font-size: clamp(18px, 4vw, 32px);
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.15;
+      white-space: nowrap; // ❌ არ დაშლის ხაზებად
+
+      span {
+        display: inline-block;
+        font-size: 0.9em;
+      }
+    }
+
+    p {
+      font-size: clamp(13px, 2vw, 18px);
+      margin-bottom: 16px;
+      opacity: .9;
+    }
+  }
+}
+
+/* ⭐ BUTTON */
+.btn-hero {
+  background: $btn-bg;
+  padding: clamp(8px, 1.6vw, 14px) clamp(16px, 3vw, 34px);
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  font-size: clamp(12px, 1.6vw, 16px);
+  cursor: pointer;
+  transition: .3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 10px 28px rgba(255, 46, 188, .45);
+  }
+
+  &:active {
+    transform: scale(.95);
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,.4);
+    border-radius: 50%;
+    inset: 50%;
+    transform: translate(-50%, -50%);
+    transition: .4s ease;
+  }
+
+  &:hover:before {
+    width: 180px;
+    height: 180px;
+    opacity: 0;
+  }
+}
+
+/* Fade Entrance */
+.animate-in {
+  opacity: 0;
+  transform: translateY(25px);
+  animation: fadeInUp .9s ease forwards .2s;
+}
+
+/* RESPONSIVE FIXES */
+@media (max-width: 1500px) {
+  .hero {
+    animation: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    min-height: 360px;
+    background-position: center top;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 330px;
+    padding: 0 16px;
+    background-position: center top;
+  }
+}
+
+/* ⭐ 500px ქვემოთ — H1 და ვარსკვლავები */
+@media (max-width: 500px) {
+  .hero h1 {
+    font-size: 19px;
+  }
+
+  .hero h1 span {
+    font-size: 0.7em;
+  }
+
+  .btn-hero {
+    font-size: 12px;
+    padding: 8px 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero h1 {
+    font-size: 17px;
+  }
+
+  .hero h1 span {
+    font-size: 0.65em;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroZoom {
+  from { background-size: 105%; }
+  to { background-size: 115%; }
+}
+
+
+
+.favorite-title {
+  text-align: center;
+  margin: 40px 0;
+  position: relative;
+  font-weight: 600;
+  color: #333;
+
+  span {
+    position: relative;
+    padding: 0 20px;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      height: 1px;
+      background: #333;
+      width: 200%;
+    }
+
+    &::before {
+      right: 100%;
+      margin-right: 15px;
+    }
+
+    &::after {
+      left: 100%;
+      margin-left: 15px;
+    }
+  }
+}
+
+// 📱 Responsive
+@media (max-width: 1500px) {
+  .favorite-title {
+    margin: 30px 0;
+
+    span {
+      padding: 0 12px;
+
+      &::before,
+      &::after {
+        width: 150%; // პატარა ეკრანზე
+      }
+    }
+  }
+}
+@media (max-width: 1040px) {
+  .favorite-title {
+    margin: 30px 0;
+
+    span {
+      padding: 0 12px;
+
+      &::before,
+      &::after {
+        width: 150%; // პატარა ეკრანზე
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .favorite-title {
+    margin: 30px 0;
+
+    span {
+      padding: 0 12px;
+
+      &::before,
+      &::after {
+        width: 70%; // პატარა ეკრანზე
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .favorite-title {
+    margin: 20px 0;
+
+    span {
+      padding: 0 8px;
+
+      &::before,
+      &::after {
+        width: 28%; // ძალიან პატარა ეკრანზე
+      }
+    }
+  }
+}
