@@ -81,7 +81,7 @@ $overlay-bottom: rgba(0, 0, 0, .25);
     position: absolute;
     width: 0;
     height: 0;
-    background: rgba(255,255,255,.4);
+    background: rgba(255, 255, 255, .4);
     border-radius: 50%;
     inset: 50%;
     transform: translate(-50%, -50%);
@@ -167,15 +167,20 @@ $overlay-bottom: rgba(0, 0, 0, .25);
 }
 
 @keyframes heroZoom {
-  from { background-size: 105%; }
-  to { background-size: 115%; }
-}
+  from {
+    background-size: 105%;
+  }
 
+  to {
+    background-size: 115%;
+  }
+}
 
 
 .favorite-title {
   text-align: center;
-  margin: 40px 0;
+  margin-top: 60px;    // ზევით მეტი
+  margin-bottom: 20px; // ქვემოთ ნაკლები
   position: relative;
   font-weight: 600;
   color: #333;
@@ -183,6 +188,7 @@ $overlay-bottom: rgba(0, 0, 0, .25);
   span {
     position: relative;
     padding: 0 20px;
+    font-size: 18px;
 
     &::before,
     &::after {
@@ -206,45 +212,50 @@ $overlay-bottom: rgba(0, 0, 0, .25);
   }
 }
 
-// 📱 Responsive
+/* Responsive */
 @media (max-width: 1500px) {
   .favorite-title {
-    margin: 30px 0;
+    margin-top: 50px;
+    margin-bottom: 20px;
 
     span {
       padding: 0 12px;
 
       &::before,
       &::after {
-        width: 150%; // პატარა ეკრანზე
+        width: 150%;
       }
     }
   }
 }
+
 @media (max-width: 1040px) {
   .favorite-title {
-    margin: 30px 0;
+    margin-top: 50px;
+    margin-bottom: 20px;
 
     span {
       padding: 0 12px;
 
       &::before,
       &::after {
-        width: 150%; // პატარა ეკრანზე
+        width: 150%;
       }
     }
   }
 }
+
 @media (max-width: 768px) {
   .favorite-title {
-    margin: 30px 0;
+    margin-top: 40px;
+    margin-bottom: 15px;
 
     span {
       padding: 0 12px;
 
       &::before,
       &::after {
-        width: 70%; // პატარა ეკრანზე
+        width: 70%;
       }
     }
   }
@@ -252,15 +263,651 @@ $overlay-bottom: rgba(0, 0, 0, .25);
 
 @media (max-width: 480px) {
   .favorite-title {
-    margin: 20px 0;
+    margin-top: 30px;
+    margin-bottom: 10px;
 
     span {
       padding: 0 8px;
 
       &::before,
       &::after {
-        width: 28%; // ძალიან პატარა ეკრანზე
+        width: 28%;
       }
     }
   }
 }
+
+
+:root {
+  --bg: #ffffff;
+  --card-bg: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --text-dark: #1f2937;
+  --muted: #6b7280;
+
+  --blue: #2563eb;
+  --blue-light: #60a5fa;
+  --blue-soft: #e8f1ff;
+
+  --shadow: 0 12px 26px rgba(0, 0, 0, .08);
+  --shadow-hover: 0 18px 40px rgba(0, 0, 0, .12);
+  --radius: 18px;
+}
+
+/* WHITE CLEAN BACKGROUND */
+.rooms-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 3 CARDS */
+.rooms-container {
+  width: 100%;
+  max-width: 1150px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+/* CARD */
+.room-card {
+  position: relative;
+  height: 360px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  cursor: pointer;
+  transition: .35s ease;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(0, 0, 0, 0.18);
+    /* უბრალოდ ოდნავ გამუქდება */
+    background: #ffffff;
+    /* აღარ გადადის ლურჯად */
+  }
+
+  /* subtle gradient edge glow */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(135deg, transparent, rgba(165, 205, 255, 0.25), transparent);
+    opacity: 0;
+    transition: .4s;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+/* IMAGE */
+.room-image {
+  width: 100%;
+  height: 55%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .6s;
+  }
+
+  .room-card:hover & img {
+    transform: scale(1.1);
+  }
+}
+
+/* CONTENT */
+.room-content {
+  height: 45%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .room-title {
+    color: var(--text-dark);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .price-section {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+
+    .price {
+      color: var(--blue);
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .per-night {
+      color: var(--muted);
+      font-size: 14px;
+    }
+  }
+
+  .book-btn {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .4px;
+
+    color: #ffffff;
+
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
+    box-shadow: 0 10px 24px rgba(37, 99, 235, .35);
+
+    position: relative;
+    overflow: hidden;
+    transition: .35s ease;
+
+    /* always visible from start */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      transform: translateY(-3px) scale(1.02);
+      background: linear-gradient(135deg, #1d4ed8, #8fbaff);
+      box-shadow: 0 16px 36px rgba(37, 99, 235, .45);
+    }
+
+    &:active {
+      transform: scale(.97);
+    }
+
+    /* shiny swipe effect */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg,
+          transparent,
+          rgba(255, 255, 255, .35),
+          transparent);
+      transform: translateX(-100%);
+      transition: .6s;
+    }
+
+    &:hover::after {
+      transform: translateX(100%);
+    }
+  }
+
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .rooms-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 780px) {
+  .rooms-container {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .room-card {
+    height: 350px;
+  }
+}
+
+
+
+
+
+
+/* ===============================
+   WHY HOTELS SECTION
+   =============================== */
+.why-hotels {
+  width: 100%;
+  padding: 0px 20px 20px 20px;
+  text-align: center;
+
+  h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 50px;
+    position: relative;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #2563eb;
+      margin: 12px auto 0;
+      border-radius: 2px;
+    }
+
+    animation: fadeSlideDown 0.8s ease forwards;
+  }
+
+  .why-hotels-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* დიდ ეკრანზე 2-2 */
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .card {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: #ffffff;
+      padding: 30px 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeSlideUp 0.8s ease forwards;
+      width: 100%;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+      }
+
+      .icon {
+        font-size: 36px;
+        color: #2563eb;
+        flex-shrink: 0;
+      }
+
+      .text {
+        text-align: left;
+
+        h3 {
+          font-size: 20px;
+          font-weight: 700;
+          margin-bottom: 8px;
+          color: #1e3a8a;
+        }
+
+        p {
+          font-size: 15px;
+          color: #334155;
+          line-height: 1.5;
+        }
+
+        a {
+          color: #2563eb;
+          text-decoration: underline;
+
+          &:hover {
+            color: #1e3a8a;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ===============================
+   ANIMATIONS
+   =============================== */
+@keyframes fadeSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===============================
+   RESPONSIVE MEDIA QUERIES
+   =============================== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .why-hotels {
+    padding: 50px 20px;
+
+    h2 {
+      font-size: 32px;
+      margin-bottom: 40px;
+    }
+
+    .why-hotels-cards {
+      gap: 25px;
+      grid-template-columns: 1fr 1fr; /* ისევ 2-2 */
+    }
+
+    .card {
+      padding: 25px 20px;
+
+      .icon {
+        font-size: 32px;
+      }
+
+      .text h3 {
+        font-size: 18px;
+      }
+
+      .text p {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+/* Small tablets / large phones */
+@media (max-width: 768px) {
+  .why-hotels {
+    padding: 35px 15px;
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 25px;
+    }
+
+    .why-hotels-cards {
+      grid-template-columns: 1fr 1fr; /* 2-2 */
+      gap: 15px; /* უფრო მცირე შუალედი */
+    }
+
+    .card {
+      flex-direction: column; /* ქარდის შიგნით ტექსტი და აიკონი ზედ-ქვემოთ */
+      align-items: center;
+      text-align: center;
+      padding: 15px;
+
+      .icon {
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+
+      .text h3 {
+        font-size: 15px;
+        margin-bottom: 5px;
+      }
+
+      .text p {
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .why-hotels {
+    padding: 25px 10px;
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .why-hotels-cards {
+      grid-template-columns: 1fr 1fr; /* 2-2 მობილურზეც */
+      gap: 10px;
+    }
+
+    .card {
+      padding: 12px;
+      .icon {
+        font-size: 26px;
+        margin-bottom: 6px;
+      }
+
+      .text h3 {
+        font-size: 14px;
+      }
+
+      .text p {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   Gallery Container
+========================= */
+.gallery-container {
+  text-align: center;
+  margin: 20px;
+  padding: 0 10px;
+
+  .gallery-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin-bottom: 50px;
+    position: relative;
+  }
+
+  .gallery-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+
+    .photo {
+      cursor: pointer;
+
+      &.line1 { width: calc(50% - 12px); }
+      &.line2 { width: calc(33.33% - 12px); }
+
+      img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+        &:hover {
+          transform: scale(1.03);
+          box-shadow: 0 8px 20px rgba(30, 58, 138, 0.5);
+        }
+      }
+    }
+  }
+
+  .show-more {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #1E40AF, #3B82F6);
+    color: #fff;
+    transition: 0.3s;
+
+    &:hover {
+      background: linear-gradient(90deg, #3B82F6, #1E3A8A);
+      transform: scale(1.05);
+    }
+  }
+}
+
+/* =========================
+   Lightbox
+========================= */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 58, 138, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 20px;
+  box-sizing: border-box;
+  animation: fadeIn 0.5s ease;
+
+  .lightbox-content {
+    text-align: center;
+    width: 100%;
+    max-width: 95%;
+    max-height: 95%;
+
+    .lightbox-img-wrapper {
+      width: 100%;
+      height: auto;
+      max-height: 80vh; /* ეკრანის 80% სიმაღლე */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 10px;
+
+      img.lightbox-img {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
+        object-fit: contain; /* მთელი ფოტო ჩანს */
+        animation: zoomIn 0.5s ease;
+      }
+    }
+
+    .photo-counter {
+      margin-top: 12px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #ff4d4f;
+    }
+  }
+
+  .prev, .next {
+    position: absolute;
+    top: 50%;
+    color: white;
+    font-size: 50px;
+    background: rgba(30, 58, 138, 0.5);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background 0.3s;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background: rgba(59, 130, 246, 0.8);
+    }
+  }
+
+  .prev { left: 20px; }
+  .next { right: 20px; }
+}
+
+/* =========================
+   Animations
+========================= */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* =========================
+   Responsive Gallery
+========================= */
+@media (max-width: 992px) {
+  .photo.line2 { width: calc(50% - 12px); }
+}
+
+@media (max-width: 576px) {
+  .photo.line1, .photo.line2 { width: 100%; }
+}
+
+/* =========================
+   Responsive Lightbox
+========================= */
+@media (max-width: 1200px) {
+  .lightbox-img-wrapper { max-height: 70vh; }
+}
+
+@media (max-width: 992px) {
+  .lightbox-img-wrapper { max-height: 60vh; }
+}
+
+@media (max-width: 768px) {
+  .lightbox-img-wrapper { max-height: 50vh; }
+}
+
+@media (max-width: 480px) {
+  .lightbox-img-wrapper { max-height: 40vh; }
+  .prev, .next { width: 45px; height: 45px; font-size: 36px; }
+  .close { font-size: 32px; right: 20px; top: 15px; }
+}
+

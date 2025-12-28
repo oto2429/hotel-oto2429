@@ -6,9 +6,125 @@
     </div>
 </div>
 
+
+
 <div class="favorite-title">
-  <span>Guests Favorite Rooms</span>
+    <span>Guests Favorite Rooms</span>
 </div>
 
 
+
+
+@if (toDoData) {
+<div class="rooms-wrapper">
+    <div class="rooms-container grid-3">
+
+        @for (room of toDoData.slice(0,6); track room.id) {
+        <div class="room-card">
+
+            <div class="room-image">
+                <img [src]="room.images?.[0]?.source" [alt]="room.name" loading="lazy" />
+            </div>
+
+            <div class="room-content">
+                <h3 class="room-title">{{ room.name }}</h3>
+
+                <div class="price-section">
+                    <span class="price">₾ {{ room.pricePerNight }}</span>
+                    <span class="per-night">/ night</span>
+                </div>
+
+                <button class="book-btn">
+                    Book Now
+                </button>
+            </div>
+
+        </div>
+        }
+
+    </div>
+</div>
+}
+
+
+
+
+
+
+<section class="why-hotels">
+  <div class="why-hotels-content">
+    <h2>Why Our Hotels?</h2>
+
+    <div class="why-hotels-cards">
+      <div class="card">
+        <div class="icon">📍</div>
+        <div class="text">
+          <h3>Top location</h3>
+          <p>Our hotels are located in vintage areas of the city, close to markets, restaurants and with a good view of the city.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon">❤️</div>
+        <div class="text">
+          <h3>A charming hotel</h3>
+          <p>We do our best for you to enjoy your stay at our charming boutique hotel.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon">🏃‍♂️</div>
+        <div class="text">
+          <h3>Activities</h3>
+          <p>There are so many fun and interesting things you can do in Bergen! We help you on your way and can give you discounts on selected attractions and places to eat.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="icon">⭐</div>
+        <div class="text">
+          <h3>Happy guests</h3>
+          <p>Not many hotels have so many happy guests as ours. Read some of the reviews <a href="https://www.google.com/travel/search?q=google%20review%20hotel&qs=CAE4CkIJCY1FvcXEyr91QgkJYemj7c_oJu1CCQmrYLlzqeGulEIJCWbkQ1xkv2oD&g2lb=2502548%2C2503771%2C2503781%2C4258168%2C4284970%2C4306835%2C4718358%2C4723331%2C4731329%2C4757164%2C4814050%2C4852066%2C4861688%2C4864715%2C4879519%2C4886082%2C4886480%2C4887844%2C4888422%2C4893075%2C4898006%2C4898159%2C4900299&hl=en-MN&gl=mn&ssta=1&ts=CAESCgoCCAMKAggDEAAaIAoCGgASGhIUCgcI6A8QBBgLEgcI6A8QBBgMGAEyAhAAKgoKABoAIgQKAhAB&ap=MAFoAQ&ictx=1&utm_campaign=sharing&utm_medium=link&utm_source=htls&fbclid=IwAR1kE1a4UDWl_fQQDAzDAgGNaOIhU1LTGP7XYsI4dh6ho7MXvChdPasfVg8&ei=9y4FZv2GFaOvrcUP09ic6Ao&ved=0CAAQ5JsGahcKEwjggM3l69uRAxUAAAAAHQAAAAAQCw">here</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<div class="gallery-container">
+  <h2 class="gallery-title">Our Gallery</h2>
+
+  <div class="gallery-wrapper">
+    <div class="gallery">
+      <!-- პირველი ხაზი: 2 ფოტო -->
+      <div class="photo line1" *ngFor="let photo of visiblePhotos.slice(0,2); let i = index" (click)="openLightbox(i)">
+        <img [src]="photo" alt="Photo {{i + 1}}">
+      </div>
+
+      <!-- მეორე ხაზი: 3 ფოტო -->
+      <div class="photo line2" *ngFor="let photo of visiblePhotos.slice(2,5); let i = index" (click)="openLightbox(i+2)">
+        <img [src]="photo" alt="Photo {{i + 3}}">
+      </div>
+    </div>
+  </div>
+
+  <button *ngIf="visiblePhotos.length < photos.length" (click)="openViewMoreLightbox()" class="show-more">
+    View More
+  </button>
+</div>
+
+<div class="lightbox" *ngIf="lightboxOpen()">
+  <span class="close" (click)="closeLightbox()">&times;</span>
+  <div class="lightbox-content">
+    <div class="lightbox-img-wrapper">
+      <img class="lightbox-img" [src]="photos[currentIndex()]">
+    </div>
+    <div class="photo-counter">{{currentIndex() + 1}} / {{photos.length}}</div>
+  </div>
+  <button class="prev" (click)="prev($event)">&#10094;</button>
+  <button class="next" (click)="next($event)">&#10095;</button>
+</div>
 

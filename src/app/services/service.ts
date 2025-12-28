@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Rooms } from '../main pages/rooms/rooms';
+import { Hotels } from '../main pages/hotels/hotels';
 
 @Injectable({
   providedIn: 'root',
@@ -9,15 +10,22 @@ import { Rooms } from '../main pages/rooms/rooms';
 export class Service {
   public http = inject(HttpClient)
 
-  public roomsAll():Observable<Rooms> {
-    return this.http.get<Rooms>(
+  public roomsAll():Observable<Rooms[]> {
+    return this.http.get<Rooms[]>(
       "https://hotelbooking.stepprojects.ge/api/Rooms/GetAll"
     )
   }
 
-  public roomsById():Observable<Rooms> {
+  public roomsById( id :number):Observable<Rooms> {
     return this.http.get<Rooms>(
-      "https://hotelbooking.stepprojects.ge/api/Rooms/GetRoom/${id}"
+      `https://hotelbooking.stepprojects.ge/api/Rooms/GetRoom/${id}`
+    )
+  }
+
+
+  public hotelsAll():Observable<Hotels>{
+    return this.http.get<Hotels>(
+      `https://hotelbooking.stepprojects.ge/api/Hotels/GetAll`
     )
   }
 
