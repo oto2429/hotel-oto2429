@@ -665,38 +665,59 @@ $overlay-bottom: rgba(0, 0, 0, .25);
   }
 }
 
-/* Mobile phones */
 @media (max-width: 480px) {
   .why-hotels {
-    padding: 25px 10px;
+    padding: 15px 8px;
 
     h2 {
-      font-size: 22px;
-      margin-bottom: 20px;
+      font-size: 20px;
+      margin-bottom: 15px;
+
+      &::after {
+        width: 40px;
+        height: 2px;
+      }
     }
 
     .why-hotels-cards {
-      grid-template-columns: 1fr 1fr; /* 2-2 მობილურზეც */
-      gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      grid-auto-rows: min-content; // ქარდები ზომას ავტომატურად იღებენ
     }
 
     .card {
-      padding: 12px;
+      flex-direction: column; // აიკონი ზედ, ტექსტი ქვემოთ
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+      border-radius: 12px;
+
       .icon {
-        font-size: 26px;
+        font-size: 24px;
         margin-bottom: 6px;
       }
 
-      .text h3 {
-        font-size: 14px;
-      }
+      .text {
+        h3 {
+          font-size: 13px;
+          margin-bottom: 4px;
+        }
 
-      .text p {
-        font-size: 12px;
+        p {
+          font-size: 12px;
+          line-height: 1.35; // არ არის ძალიან დიდი
+          word-break: break-word; // თავიდან ავიცილოთ გაწელილი სიტყვები
+        }
+
+        a {
+          font-size: 12px;
+        }
       }
     }
   }
 }
+
 
 
 
@@ -772,99 +793,100 @@ $overlay-bottom: rgba(0, 0, 0, .25);
       transform: scale(1.05);
     }
   }
-}
-
-/* =========================
-   Lightbox
+}/* =========================
+   Lightbox (GRAY OVERLAY)
 ========================= */
 .lightbox {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(30, 58, 138, 0.95);
+  inset: 0;
+  background: rgba(20, 20, 20, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
-  padding: 20px;
-  box-sizing: border-box;
-  animation: fadeIn 0.5s ease;
-
-  .lightbox-content {
-    text-align: center;
-    width: 100%;
-    max-width: 95%;
-    max-height: 95%;
-
-    .lightbox-img-wrapper {
-      width: 100%;
-      height: auto;
-      max-height: 80vh; /* ეკრანის 80% სიმაღლე */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      border-radius: 10px;
-
-      img.lightbox-img {
-        width: auto;
-        max-width: 100%;
-        height: auto;
-        max-height: 100%;
-        object-fit: contain; /* მთელი ფოტო ჩანს */
-        animation: zoomIn 0.5s ease;
-      }
-    }
-
-    .photo-counter {
-      margin-top: 12px;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 500;
-    }
-  }
-
-  .close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: white;
-    font-size: 40px;
-    cursor: pointer;
-    transition: color 0.3s;
-
-    &:hover {
-      color: #ff4d4f;
-    }
-  }
-
-  .prev, .next {
-    position: absolute;
-    top: 50%;
-    color: white;
-    font-size: 50px;
-    background: rgba(30, 58, 138, 0.5);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transform: translateY(-50%);
-    transition: background 0.3s;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:hover {
-      background: rgba(59, 130, 246, 0.8);
-    }
-  }
-
-  .prev { left: 20px; }
-  .next { right: 20px; }
+  animation: fadeIn 0.35s ease;
 }
+
+/* ცენტრში კონტენტი */
+.lightbox-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* სტაბილური ზომის wrapper */
+.lightbox-img-wrapper {
+  width: min(90vw, 1100px);
+  height: min(70vh, 650px);
+  background: #111827;
+  border-radius: 18px;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ყველა ფოტო ერთნაირი */
+.lightbox-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: zoomIn 0.4s ease;
+}
+
+/* ფოტო counter */
+.photo-counter {
+  position: absolute;
+  bottom: 28px;
+  color: #e5e7eb;
+  font-size: 15px;
+}
+
+/* დახურვა */
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 36px;
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #ef4444;
+  }
+}
+
+/* prev / next */
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #f9fafb;
+  font-size: 38px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.prev { left: 28px; }
+.next { right: 28px; }
 
 /* =========================
    Animations
@@ -875,39 +897,335 @@ $overlay-bottom: rgba(0, 0, 0, .25);
 }
 
 @keyframes zoomIn {
-  from { transform: scale(0.7); opacity: 0; }
+  from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
 /* =========================
-   Responsive Gallery
+   Responsive
 ========================= */
 @media (max-width: 992px) {
-  .photo.line2 { width: calc(50% - 12px); }
-}
+  .gallery {
+    width: 85%;
+  }
 
-@media (max-width: 576px) {
-  .photo.line1, .photo.line2 { width: 100%; }
-}
+  .photo.line2 {
+    width: calc(50% - 8px);
+  }
 
-/* =========================
-   Responsive Lightbox
-========================= */
-@media (max-width: 1200px) {
-  .lightbox-img-wrapper { max-height: 70vh; }
-}
-
-@media (max-width: 992px) {
-  .lightbox-img-wrapper { max-height: 60vh; }
+  .lightbox-img-wrapper {
+    width: 92vw;
+    height: 60vh;
+  }
 }
 
 @media (max-width: 768px) {
-  .lightbox-img-wrapper { max-height: 50vh; }
+  .gallery {
+    width: 100%;
+  }
+
+  .photo.line1,
+  .photo.line2 {
+    width: 100%;
+    height: 220px;
+  }
+
+  .lightbox-img-wrapper {
+    width: 95vw;
+    height: 55vh;
+  }
+
+  .prev,
+  .next {
+    width: 46px;
+    height: 46px;
+    font-size: 32px;
+  }
 }
 
 @media (max-width: 480px) {
-  .lightbox-img-wrapper { max-height: 40vh; }
-  .prev, .next { width: 45px; height: 45px; font-size: 36px; }
-  .close { font-size: 32px; right: 20px; top: 15px; }
+  .lightbox-img-wrapper {
+    height: 45vh;
+    border-radius: 14px;
+  }
+
+  .close {
+    font-size: 28px;
+    top: 14px;
+    right: 18px;
+  }
 }
+
+
+
+
+
+
+.faq {
+  padding: 40px 16px;
+  background: #f5f7fb;
+  &-title {
+    text-align: center;
+    font-weight: 700;
+    color: #1e3a8a;
+
+    /* სრულად რესპონსივი */
+    font-size: clamp(22px, 5vw, 36px);
+    line-height: 1.2;
+    margin-bottom: 40px;
+  }
+
+  &-list {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+}
+
+/* ITEM */
+.faq-item {
+  background: #ffffff;
+  border-radius: 18px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* HEADER */
+.faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 24px;
+  cursor: pointer;
+  background: #ffffff;
+
+  h3 {
+    font-size: clamp(15px, 3.5vw, 18px);
+    font-weight: 600;
+    margin: 0;
+    color: #1f2937;
+    line-height: 1.4;
+  }
+
+  .icon {
+    font-size: 30px;
+    font-weight: 400;
+    color: #1e88e5; // 🔵 ლურჯი + -
+    transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.3s ease;
+  }
+}
+
+/* CONTENT – smooth accordion */
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+
+  /* ყველაზე smooth ვარიანტი CSS-ით */
+  transition: max-height 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+              padding 0.45s ease,
+              opacity 0.3s ease;
+
+  opacity: 0;
+
+  p {
+    margin: 0;
+    color: #4b5563;
+    line-height: 1.7;
+    font-size: clamp(14px, 3.5vw, 16px);
+  }
+}
+
+/* ACTIVE */
+.faq-item.active {
+  .faq-content {
+    max-height: 600px;
+    padding: 20px 24px 26px;
+    opacity: 1;
+  }
+
+  .icon {
+    transform: rotate(180deg);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .faq {
+    padding: 20px 12px;
+  }
+
+  .faq-header {
+    padding: 18px;
+
+    h3 {
+      font-size: 14px;
+    }
+
+    .icon {
+      font-size: 26px;
+    }
+  }
+
+  .faq-item.active .faq-content {
+    padding: 16px 18px 20px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.customer-service {
+  padding: 40px 20px;
+  text-align: center;
+
+  h2 {
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    margin-bottom: 50px;
+    text-align: center;
+    font-weight: 700;
+    color: #1e3a8a;
+  }
+}
+
+.service-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service-card {
+  background: linear-gradient(135deg, #dff5ff, #bfeeff);
+  border-radius: 18px;
+  padding: 26px 30px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  font-size: 16px;
+  font-weight: 600;
+  color: #003a4d;
+
+  transition: all 0.35s ease;
+  cursor: pointer;
+
+  .icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: #ffffff;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 20px;
+      color: #0077a3;
+    }
+  }
+
+  span {
+    word-break: break-all;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #bfeeff, #9edfff);
+  }
+}
+
+/* ===== Responsive ===== */
+
+/* Large screens (4K) */
+@media (min-width: 1600px) {
+  .service-cards {
+    max-width: 1400px;
+    gap: 30px;
+  }
+
+  .service-card {
+    font-size: 18px;
+    padding: 30px 36px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .service-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .service-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card {
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 22px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .service-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .service-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 18px 14px;
+    font-size: 14px;
+  }
+
+  .icon-wrapper {
+    width: 42px;
+    height: 42px;
+
+    i {
+      font-size: 18px;
+    }
+  }
+}
+
+
+
 

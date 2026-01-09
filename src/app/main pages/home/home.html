@@ -128,3 +128,58 @@
   <button class="next" (click)="next($event)">&#10095;</button>
 </div>
 
+
+
+
+
+<section class="faq">
+  <h2 class="faq-title">Frequently asked question</h2>
+
+  <div class="faq-list">
+    <div
+      class="faq-item"
+      *ngFor="let faq of faqs; let i = index"
+      [class.active]="faq.open"
+    >
+      <div class="faq-header" (click)="toggle(i)">
+        <h3>{{ faq.question }}</h3>
+        <span class="icon">
+          {{ faq.open ? '−' : '+' }}
+        </span>
+      </div>
+
+      <div class="faq-content">
+        <p>{{ faq.answer }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="customer-service">
+  <h2>Customer Service</h2>
+
+  <div class="service-cards">
+    <div class="service-card">
+      <i class="fa-solid fa-phone"></i>
+      <span>+995 3 555 555</span>
+    </div>
+
+    <div class="service-card">
+      <i class="fa-solid fa-envelope"></i>
+      <span>hotelbooking@gmail.ge</span>
+    </div>
+
+    <div class="service-card">
+      <i class="fa-brands fa-facebook-messenger"></i>
+      <span>m.me/hotelbooking</span>
+    </div>
+
+    <div class="service-card">
+      <i class="fa-brands fa-facebook-f"></i>
+      <span>fb.com/hotelbooking</span>
+    </div>
+  </div>
+</section>
