@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Service } from '../../services/service';
-import { hotelCard, } from '../../models/model.interface';
-import { catchError, finalize, of, Subject, takeUntil, tap } from 'rxjs';
+import { hotelCard } from '../../models/model.interface';
+import { catchError, finalize, of, Subject, takeUntil, tap, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-hotels',
@@ -10,34 +10,49 @@ import { catchError, finalize, of, Subject, takeUntil, tap } from 'rxjs';
   styleUrl: './hotels.scss',
 })
 export class Hotels implements OnInit, OnDestroy {
-  public hotelALL = inject(Service);
-  public hoteldata: hotelCard[] | undefined;
-  public hasError: boolean = false;
-  public destroy$ = new Subject();
+  private service = inject(Service);
+  public allHotels: hotelCard[] = [];
+  public filteredHotels: hotelCard[] = [];
+  public cities: string[] = [];
+  public activeCity: string = 'All';
+  public hasError = false;
+  private destroy$ = new Subject<void>();
 
-
-  ngOnInit() {
-    this.hotelALL
-      .hotelsAll()
+  ngOnInit(): void {
+    forkJoin({
+      hotels: this.service.hotelsAll(),
+      cities: this.service.getCities(),
+    })
       .pipe(
         takeUntil(this.destroy$),
-        tap((data) => {
-          this.hoteldata = data as unknown as hotelCard[];
+        tap(({ hotels, cities }) => {
+          this.allHotels = hotels as hotelCard[];
+          this.filteredHotels = hotels as hotelCard[];
+          this.cities = cities;
         }),
         catchError(() => {
           this.hasError = true;
-          return of('error');
-        }),
-        finalize(() => {
-          console.log('final')
+          return of(null);
         })
       )
       .subscribe();
+  }
 
+  filterByCity(city: string): void {
+    this.activeCity = city;
+
+    if (city === 'All') {
+      this.filteredHotels = this.allHotels;
+      return;
+    }
+
+    this.filteredHotels = this.allHotels.filter(
+      (hotel) => hotel.city === city
+    );
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next;
+    this.destroy$.next();
     this.destroy$.complete();
   }
 

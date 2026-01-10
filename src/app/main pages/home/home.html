@@ -70,7 +70,7 @@
         <div class="icon">🏃‍♂️</div>
         <div class="text">
           <h3>Activities</h3>
-          <p>There are so many fun and interesting things you can do in Bergen! We help you on your way and can give you discounts on selected attractions and places to eat.</p>
+          <p>There are so many fun and interesting things you can do in out Hotels! We help you on your way and can give you discounts on selected attractions and places to eat.</p>
         </div>
       </div>
 
@@ -93,12 +93,11 @@
 
   <div class="gallery-wrapper">
     <div class="gallery">
-      <!-- პირველი ხაზი: 2 ფოტო -->
+ 
       <div class="photo line1" *ngFor="let photo of visiblePhotos.slice(0,2); let i = index" (click)="openLightbox(i)">
         <img [src]="photo" alt="Photo {{i + 1}}">
       </div>
 
-      <!-- მეორე ხაზი: 3 ფოტო -->
       <div class="photo line2" *ngFor="let photo of visiblePhotos.slice(2,5); let i = index" (click)="openLightbox(i+2)">
         <img [src]="photo" alt="Photo {{i + 3}}">
       </div>

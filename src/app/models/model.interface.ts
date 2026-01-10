@@ -18,4 +18,5 @@ export interface hotelCard {
   id: number;
   name: string;
   featuredImage: string;
+  city: string;
 }
