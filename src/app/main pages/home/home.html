@@ -11,15 +11,11 @@
 <div class="favorite-title">
     <span>Guests Favorite Rooms</span>
 </div>
-
-
-
-
 @if (toDoData) {
 <div class="rooms-wrapper">
     <div class="rooms-container grid-3">
 
-        @for (room of toDoData.slice(0,6); track room.id) {
+        @for (room of toDoData; track room.id) {
         <div class="room-card">
 
             <div class="room-image">
@@ -45,8 +41,6 @@
     </div>
 </div>
 }
-
-
 
 
 

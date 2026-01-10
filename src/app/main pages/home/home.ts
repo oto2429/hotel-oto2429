@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Service } from '../../services/service';
-import { catchError, finalize, of, takeUntil, tap, Subject } from 'rxjs';
+import { catchError, finalize, of, takeUntil, tap, Subject, map } from 'rxjs';
 import { roomCard } from '../../models/model.interface';
 import { CommonModule } from '@angular/common';
 
@@ -18,36 +18,36 @@ export class Home implements OnInit, OnDestroy {
   public hasError: boolean = false;
   public destroy$ = new Subject();
 
-
-
-
   ngOnInit() {
     this.cardId
       .roomsAll()
       .pipe(
         takeUntil(this.destroy$),
-        tap((data) => {
-          this.toDoData = data as unknown as roomCard[];
+        map((data: unknown) => {
+          const rooms = data as unknown as roomCard[];
+          return rooms
+            .sort((a, b) => b.bookedDates.length - a.bookedDates.length)
+            .slice(0, 6);
+        }),
+        tap((sortedRooms) => {
+          this.toDoData = sortedRooms;
         }),
         catchError(() => {
           this.hasError = true;
           return of('error');
         }),
         finalize(() => {
-          console.log('final')
+          console.log('final');
         })
       )
       .subscribe();
-
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next;
+    this.destroy$.next(true);
     this.destroy$.complete();
   }
-
   constructor(private router: Router) {
-    // this.visiblePhotos = this.photos.slice(0, 5); 
   }
 
   goToHotels() {
