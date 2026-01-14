@@ -47,6 +47,7 @@ export class Home implements OnInit, OnDestroy {
     this.destroy$.next(true);
     this.destroy$.complete();
   }
+
   constructor(private router: Router) {
   }
 
@@ -146,18 +147,9 @@ export class Home implements OnInit, OnDestroy {
       open: false
     }
   ];
-
   toggle(index: number) {
     this.faqs[index].open = !this.faqs[index].open;
   }
-
-
-
-
-
-
-
-
 }
 
 

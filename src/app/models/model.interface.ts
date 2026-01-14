@@ -1,8 +1,20 @@
-export interface roomCard {
+
+export interface hotelCard {
+  id: number;
+  name: string;
+  featuredImage: string;
+  city: string;
+}
+
+export interface roomCard{
   id: number;
   name: string;
   pricePerNight: number;
-  bookedDates: {
+  roomTypeId: number;
+  maximumGuests: number;
+  available: boolean;
+  hotelId: number;
+    bookedDates: {
     id: number;
     date: string;
     roomId: number;
@@ -10,13 +22,27 @@ export interface roomCard {
   images: {
     id: number;
     source: string;
-    roomId: number;
   }[];
 }
 
-export interface hotelCard {
+export interface RoomFilter {
+  roomTypeId: number;
+  priceFrom: number;
+  priceTo: number;
+  maximumGuests: number;
+  checkIn?: string;
+  checkOut?: string;
+}
+
+
+export interface bookingCard {
   id: number;
-  name: string;
-  featuredImage: string;
-  city: string;
+  roomID: number;
+  checkInDate: string;
+  checkOutDate: string;
+  totalPrice: number;
+  isConfirmed: boolean;
+  customerName: string;
+  customerId: string;
+  customerPhone: string;
 }

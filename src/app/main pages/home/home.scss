@@ -179,7 +179,7 @@ $overlay-bottom: rgba(0, 0, 0, .25);
 
 .favorite-title {
   text-align: center;
-  margin-top: 60px;    // ზევით მეტი
+  margin-top: 60px; // ზევით მეტი
   margin-bottom: 20px; // ქვემოთ ნაკლები
   position: relative;
   font-weight: 600;
@@ -235,11 +235,11 @@ $overlay-bottom: rgba(0, 0, 0, .25);
     margin-bottom: 20px;
 
     span {
-      padding: 0 12px;
+      padding: 0 6px;
 
       &::before,
       &::after {
-        width: 150%;
+        width: 100%;
       }
     }
   }
@@ -251,11 +251,11 @@ $overlay-bottom: rgba(0, 0, 0, .25);
     margin-bottom: 15px;
 
     span {
-      padding: 0 12px;
+      padding: 0 2px;
 
       &::before,
       &::after {
-        width: 70%;
+        width: 40%;
       }
     }
   }
@@ -271,40 +271,45 @@ $overlay-bottom: rgba(0, 0, 0, .25);
 
       &::before,
       &::after {
-        width: 28%;
+        width: 15%;
       }
     }
   }
 }
 
-
 :root {
-  --bg: #ffffff;
+  --bg: #f1f5f9;
   --card-bg: #ffffff;
-  --border: rgba(0, 0, 0, 0.08);
+  --border: rgba(0, 0, 0, 0.12);
+
   --text-dark: #1f2937;
   --muted: #6b7280;
 
   --blue: #2563eb;
   --blue-light: #60a5fa;
-  --blue-soft: #e8f1ff;
 
-  --shadow: 0 12px 26px rgba(0, 0, 0, .08);
-  --shadow-hover: 0 18px 40px rgba(0, 0, 0, .12);
-  --radius: 18px;
+  --shadow:
+    0 12px 28px rgba(0, 0, 0, 0.08),
+    0 4px 10px rgba(0, 0, 0, 0.05);
+
+  --shadow-hover:
+    0 24px 48px rgba(0, 0, 0, 0.12),
+    0 8px 18px rgba(0, 0, 0, 0.08);
+
+  --radius: 20px;
 }
 
-/* WHITE CLEAN BACKGROUND */
+/* WRAPPER */
 .rooms-wrapper {
   width: 100%;
   min-height: 100vh;
-  padding: 10px 20px;
+  padding: 40px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* 3 CARDS */
+/* GRID */
 .rooms-container {
   width: 100%;
   max-width: 1150px;
@@ -323,29 +328,41 @@ $overlay-bottom: rgba(0, 0, 0, .25);
   box-shadow: var(--shadow);
   overflow: hidden;
   cursor: pointer;
-  transition: .35s ease;
+
   display: flex;
   flex-direction: column;
+  transition: transform .35s ease, box-shadow .35s ease;
 
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-hover);
-    border-color: rgba(0, 0, 0, 0.18);
-    /* უბრალოდ ოდნავ გამუქდება */
-    background: #ffffff;
-    /* აღარ გადადის ლურჯად */
+  /* subtle inner highlight */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
   }
 
-  /* subtle gradient edge glow */
+  /* soft glow */
   &::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
     border-radius: inherit;
-    background: linear-gradient(135deg, transparent, rgba(165, 205, 255, 0.25), transparent);
+    background: linear-gradient(
+      135deg,
+      transparent,
+      rgba(165, 205, 255, 0.22),
+      transparent
+    );
     opacity: 0;
-    transition: .4s;
+    transition: opacity .4s ease;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
   }
 
   &:hover::after {
@@ -358,16 +375,17 @@ $overlay-bottom: rgba(0, 0, 0, .25);
   width: 100%;
   height: 55%;
   overflow: hidden;
+  border-radius: var(--radius) var(--radius) 0 0;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: .6s;
+    transition: transform .6s ease;
   }
 
   .room-card:hover & img {
-    transform: scale(1.1);
+    transform: scale(1.08);
   }
 }
 
@@ -379,85 +397,93 @@ $overlay-bottom: rgba(0, 0, 0, .25);
   flex-direction: column;
   justify-content: space-between;
 
-  .room-title {
-    color: var(--text-dark);
-    font-size: 20px;
-    font-weight: 700;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 0, 0, 0.03)
+  );
+
+
+  border-radius: 0 0 var(--radius) var(--radius);}
+
+/* TITLE */
+.room-title {
+  color: var(--text-dark);
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+/* PRICE */
+.price-section {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+
+  .price {
+    color: var(--blue);
+    font-size: 28px;
+    font-weight: 800;
   }
 
-  .price-section {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
+  .per-night {
+    color: var(--muted);
+    font-size: 14px;
+  }
+}
 
-    .price {
-      color: var(--blue);
-      font-size: 28px;
-      font-weight: 800;
-    }
+/* BUTTON — უცვლელი */
+.book-btn {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
 
-    .per-night {
-      color: var(--muted);
-      font-size: 14px;
-    }
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .4px;
+
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  overflow: hidden;
+  transition: all .35s ease;
+
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 16px 32px rgba(37, 99, 235, 0.45);
   }
 
-  .book-btn {
-    width: 100%;
-    padding: 12px 0;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: .4px;
-
-    color: #ffffff;
-
-    background: linear-gradient(135deg, #2563eb, #60a5fa);
-    box-shadow: 0 10px 24px rgba(37, 99, 235, .35);
-
-    position: relative;
-    overflow: hidden;
-    transition: .35s ease;
-
-    /* always visible from start */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-      transform: translateY(-3px) scale(1.02);
-      background: linear-gradient(135deg, #1d4ed8, #8fbaff);
-      box-shadow: 0 16px 36px rgba(37, 99, 235, .45);
-    }
-
-    &:active {
-      transform: scale(.97);
-    }
-
-    /* shiny swipe effect */
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg,
-          transparent,
-          rgba(255, 255, 255, .35),
-          transparent);
-      transform: translateX(-100%);
-      transition: .6s;
-    }
-
-    &:hover::after {
-      transform: translateX(100%);
-    }
+  &:active {
+    transform: scale(.96);
   }
 
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255, 255, 255, 0.35),
+      transparent
+    );
+    transform: translateX(-100%);
+    transition: transform .6s ease;
+  }
+
+  &:hover::after {
+    transform: translateX(100%);
+  }
 }
 
 /* RESPONSIVE */
@@ -477,11 +503,6 @@ $overlay-bottom: rgba(0, 0, 0, .25);
     height: 350px;
   }
 }
-
-
-
-
-
 
 /* ===============================
    WHY HOTELS SECTION
@@ -513,7 +534,8 @@ $overlay-bottom: rgba(0, 0, 0, .25);
 
   .why-hotels-cards {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* დიდ ეკრანზე 2-2 */
+    grid-template-columns: repeat(2, 1fr);
+    /* დიდ ეკრანზე 2-2 */
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
@@ -587,6 +609,7 @@ $overlay-bottom: rgba(0, 0, 0, .25);
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -609,7 +632,8 @@ $overlay-bottom: rgba(0, 0, 0, .25);
 
     .why-hotels-cards {
       gap: 25px;
-      grid-template-columns: 1fr 1fr; /* ისევ 2-2 */
+      grid-template-columns: 1fr 1fr;
+      /* ისევ 2-2 */
     }
 
     .card {
@@ -641,12 +665,15 @@ $overlay-bottom: rgba(0, 0, 0, .25);
     }
 
     .why-hotels-cards {
-      grid-template-columns: 1fr 1fr; /* 2-2 */
-      gap: 15px; /* უფრო მცირე შუალედი */
+      grid-template-columns: 1fr 1fr;
+      /* 2-2 */
+      gap: 15px;
+      /* უფრო მცირე შუალედი */
     }
 
     .card {
-      flex-direction: column; /* ქარდის შიგნით ტექსტი და აიკონი ზედ-ქვემოთ */
+      flex-direction: column;
+      /* ქარდის შიგნით ტექსტი და აიკონი ზედ-ქვემოთ */
       align-items: center;
       text-align: center;
       padding: 15px;
@@ -761,8 +788,13 @@ $overlay-bottom: rgba(0, 0, 0, .25);
     .photo {
       cursor: pointer;
 
-      &.line1 { width: calc(50% - 12px); }
-      &.line2 { width: calc(33.33% - 12px); }
+      &.line1 {
+        width: calc(50% - 12px);
+      }
+
+      &.line2 {
+        width: calc(33.33% - 12px);
+      }
 
       img {
         width: 100%;
@@ -796,7 +828,9 @@ $overlay-bottom: rgba(0, 0, 0, .25);
       transform: scale(1.05);
     }
   }
-}/* =========================
+}
+
+/* =========================
    Lightbox (GRAY OVERLAY)
 ========================= */
 .lightbox {
@@ -888,20 +922,37 @@ $overlay-bottom: rgba(0, 0, 0, .25);
   }
 }
 
-.prev { left: 28px; }
-.next { right: 28px; }
+.prev {
+  left: 28px;
+}
+
+.next {
+  right: 28px;
+}
 
 /* =========================
    Animations
 ========================= */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes zoomIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* =========================
@@ -967,6 +1018,7 @@ $overlay-bottom: rgba(0, 0, 0, .25);
 .faq {
   padding: 40px 16px;
   background: #f5f7fb;
+
   &-title {
     text-align: center;
     font-weight: 700;
@@ -1017,7 +1069,7 @@ $overlay-bottom: rgba(0, 0, 0, .25);
     font-weight: 400;
     color: #1e88e5; // 🔵 ლურჯი + -
     transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-                opacity 0.3s ease;
+      opacity 0.3s ease;
   }
 }
 
@@ -1028,8 +1080,8 @@ $overlay-bottom: rgba(0, 0, 0, .25);
 
   /* ყველაზე smooth ვარიანტი CSS-ით */
   transition: max-height 0.65s cubic-bezier(0.25, 1, 0.5, 1),
-              padding 0.45s ease,
-              opacity 0.3s ease;
+    padding 0.45s ease,
+    opacity 0.3s ease;
 
   opacity: 0;
 
@@ -1228,7 +1280,3 @@ $overlay-bottom: rgba(0, 0, 0, .25);
     }
   }
 }
-
-
-
-

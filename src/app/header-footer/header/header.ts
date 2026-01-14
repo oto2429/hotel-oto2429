@@ -5,12 +5,18 @@ import { RouterLink, RouterModule } from '@angular/router';
   selector: 'app-header',
   imports: [RouterLink, RouterModule],
   templateUrl: './header.html',
-  styleUrl: './header.scss',
+  styleUrls: ['./header.scss'],
 })
 export class Header {
   menuOpen = false;
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+
+    if (this.menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 }

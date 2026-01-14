@@ -1,17 +1,42 @@
 <header class="header">
-    <div class="header__logo">
-        <img src="https://fsx1.itstep.org/api/v1/files/KI8ivg78U08nXDGDQ-O_18P1-0F49u4b" alt="Hotel Logo" />
-    </div>
+  <div class="header__logo">
+    <img src="https://fsx1.itstep.org/api/v1/files/KI8ivg78U08nXDGDQ-O_18P1-0F49u4b" alt="Hotel Logo" />
+  </div>
 
-    <nav class="header__nav">
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-        <a routerLink="/rooms" routerLinkActive="active">Rooms</a>
-        <a routerLink="/hotels" routerLinkActive="active">Hotels</a>
-        <a routerLink="/bookedrooms" routerLinkActive="active">Booked Rooms</a>
+  <!-- Desktop Navigation -->
+  <nav class="header__nav">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/rooms" routerLinkActive="active">Rooms</a>
+    <a routerLink="/hotels" routerLinkActive="active">Hotels</a>
+    <a routerLink="/bookedrooms" routerLinkActive="active">Booked Rooms</a>
+  </nav>
+
+  <div class="header__actions">
+    <button class="btn login">Login</button>
+    <button class="btn register">Register</button>
+  </div>
+
+  <!-- Burger Button -->
+  <button class="burger-menu" (click)="toggleMenu()" [class.active]="menuOpen" aria-label="Toggle menu" [attr.aria-expanded]="menuOpen">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" [class.active]="menuOpen">
+    <nav class="mobile-nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleMenu()">Home</a>
+      <a routerLink="/rooms" routerLinkActive="active" (click)="toggleMenu()">Rooms</a>
+      <a routerLink="/hotels" routerLinkActive="active" (click)="toggleMenu()">Hotels</a>
+      <a routerLink="/bookedrooms" routerLinkActive="active" (click)="toggleMenu()">Booked Rooms</a>
     </nav>
-
-    <div class="header__actions">
-        <button class="login">Login</button>
-        <button class="register">Registration</button>
+    <div class="mobile-actions">
+      <button class="btn login" (click)="toggleMenu()">Login</button>
+      <button class="btn register" (click)="toggleMenu()">Register</button>
     </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="menu-overlay" [class.active]="menuOpen" (click)="toggleMenu()"></div>
 </header>

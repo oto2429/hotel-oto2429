@@ -2,6 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Service } from '../../services/service';
 import { hotelCard } from '../../models/model.interface';
 import { catchError, finalize, of, Subject, takeUntil, tap, forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hotels',
@@ -17,6 +18,7 @@ export class Hotels implements OnInit, OnDestroy {
   public activeCity: string = 'All';
   public hasError = false;
   private destroy$ = new Subject<void>();
+  private router = inject(Router);
 
   ngOnInit(): void {
     forkJoin({
@@ -57,4 +59,11 @@ export class Hotels implements OnInit, OnDestroy {
   }
 
 
+
+
+  viewRooms(hotelId: number): void {
+    this.router.navigate(['/rooms'], { queryParams: { hotelId: hotelId } });
+  }
+
 }
+
