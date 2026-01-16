@@ -285,17 +285,14 @@ export class Rooms implements OnInit, OnDestroy {
     console.log('Filtering rooms by criteria:', criteria);
     
     const filteredRooms = rooms.filter(room => {
-      // Room type filter
       if (criteria.roomTypeId !== 0 && room.roomTypeId !== criteria.roomTypeId) {
         return false;
       }
       
-      // Price filter
       if (room.pricePerNight < criteria.priceFrom || room.pricePerNight > criteria.priceTo) {
         return false;
       }
       
-      // Guests filter
       if (room.maximumGuests < criteria.maximumGuests) {
         return false;
       }

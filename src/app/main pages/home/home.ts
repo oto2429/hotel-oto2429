@@ -122,30 +122,37 @@ export class Home implements OnInit, OnDestroy {
 
 
 
-  // Frequently asked question//////
 
 
   faqs = [
     {
-      question: 'How do I book a room online?',
-      answer: '',
+      question: 'How can I make a reservation?',
+      answer: 'To make a reservation, please provide your check-in and check-out dates, the guest’s full name, and a contact phone number. After submitting this information, payment is required to confirm the booking.',
       open: true
     },
     {
-      question: 'Can I buy tickets with one ID?',
-      answer: 'Yes, you can buy tickets for multiple passengers using one ID.',
+      question: 'what payment methods do you accept?',
+      answer: 'We accept payments from any major credit card and cryptocurrencies directly on our website. Alternatively, you can visit the hotel and make your reservation in person, paying by cash.',
       open: false
     },
     {
-      question: 'What do I need to get on the train?',
-      answer: 'You need a valid ticket and an identification document.',
+      question: 'Can I cancel or modify my reservation?',
+      answer: 'You can cancel or modify your reservation up to 24 hours before check-in. Please contact our reservations team for assistance.',
       open: false
     },
     {
-      question: 'How to return a purchased ticket?',
-      answer: 'Tickets can be returned from your profile or at the ticket office.',
+      question: 'What is included in the room rate (Wi-Fi, breakfast, air conditioning, housekeeping)?',
+      answer: 'All rooms include free Wi-Fi, breakfast, air conditioning, and daily housekeeping. We take pride in providing excellent service to ensure our guests enjoy a comfortable and pleasant stay.',
       open: false
-    }
+    },
+    {
+      question: 'What are the check-in and check-out times, and is early check-in or late check-out available?',
+      answer: 'Check-in and check-out are available at any time of the day. We offer flexible check-in and check-out to ensure maximum comfort for our guests.',
+      open: false
+    },
+
+
+
   ];
   toggle(index: number) {
     this.faqs[index].open = !this.faqs[index].open;
