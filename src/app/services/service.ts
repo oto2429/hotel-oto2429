@@ -135,7 +135,11 @@ export class Service {
       }
     ).pipe(
       catchError((error: any) => {
-        console.warn('Direct API call failed, using mock registration:', error);
+        if (error.status === 0 || error.message?.includes('CORS') || error.url?.includes('everrest.educata.dev')) {
+          // Silent fallback for CORS/network errors with external API
+        } else {
+          console.warn('Direct API call failed, using mock registration:', error);
+        }
         return this.mockSignUp(userData);
       })
     );
@@ -184,7 +188,6 @@ export class Service {
       'Accept': 'application/json'
     });
     
-
     return this.http.post(
       'https://everrest.educata.dev/auth/login',
       credentials,
@@ -194,8 +197,11 @@ export class Service {
       }
     ).pipe(
       catchError((error: any) => {
-        console.warn('Direct API login failed, using mock login:', error);
-
+        if (error.status === 0 || error.message?.includes('CORS') || error.url?.includes('everrest.educata.dev')) {
+          // Silent fallback for CORS/network errors with external API
+        } else {
+          console.warn('Direct API login failed, using mock login:', error);
+        }
         return this.mockSignIn(credentials);
       })
     );

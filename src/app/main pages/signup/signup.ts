@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Service } from '../../services/service';
 import { Router } from '@angular/router';
 import { AuthServices } from '../../services/auth-services';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,16 +17,16 @@ export class Signup {
   public authService = inject(AuthServices);
   
   public formInfo: FormGroup = new FormGroup({
-    firstName: new FormControl(), 
-    lastName: new FormControl(), 
-    age: new FormControl(), 
-    email: new FormControl(), 
-    password: new FormControl(), 
-    address: new FormControl(), 
-    phone: new FormControl(), 
-    zipcode: new FormControl(), 
-    avatar: new FormControl(), 
-    gender: new FormControl(), 
+    firstName: new FormControl('', [Validators.required]), 
+    lastName: new FormControl('', [Validators.required]), 
+    age: new FormControl('', [Validators.required, Validators.min(1), Validators.max(120)]), 
+    email: new FormControl('', [Validators.required, Validators.email]), 
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]), 
+    address: new FormControl('', [Validators.required]), 
+    phone: new FormControl('', [Validators.required]), 
+    zipcode: new FormControl('', [Validators.required]), 
+    avatar: new FormControl(''), 
+    gender: new FormControl('', [Validators.required]), 
   });
 
   public isLoading = false;

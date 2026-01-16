@@ -1,11 +1,79 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Service } from '../../services/service';
+import { CommonModule } from '@angular/common';
+import { AuthServices } from '../../services/auth-services';
 
 @Component({
   selector: 'app-signin',
-  imports: [],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './signin.html',
   styleUrl: './signin.scss',
 })
 export class Signin {
+  public service = inject(Service);
+  public router = inject(Router);
+  public authService = inject(AuthServices);
+  
+  public loginFormInfo: FormGroup = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]), 
+    password: new FormControl('', [Validators.required])
+  });
 
+  public isLoading = false;
+  public showAlert = false;
+  public alertMessage = '';
+  public isSuccess = false;
+
+  login() {
+    if (this.loginFormInfo.invalid) {
+      this.showAlert = true;
+      this.alertMessage = 'Please fill in all required fields correctly.';
+      this.isSuccess = false;
+      return;
+    }
+
+    this.isLoading = true;
+    this.showAlert = false;
+
+    this.service.signIn(this.loginFormInfo.value).subscribe({
+      next: (data: any) => {
+        console.log('Login successful:', data);
+        this.isLoading = false;
+        this.isSuccess = true;
+        this.showAlert = true;
+        this.alertMessage = 'Login successful! Redirecting to home...';
+        
+        // Use auth service to manage authentication state
+        if (data.access_token) {
+          this.authService.login(data.access_token, data.user);
+        }
+        
+        // Redirect to home page after 2 seconds
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000);
+      },
+      error: (error: any) => {
+        console.error('Login error:', error);
+        this.isLoading = false;
+        this.isSuccess = false;
+        this.showAlert = true;
+        
+        // Handle different types of errors
+        if (error.status === 0) {
+          this.alertMessage = 'Network error: Unable to connect to login service. Please check your internet connection and try again.';
+        } else if (error.status === 401) {
+          this.alertMessage = 'Login failed: Invalid email or password. Please try again.';
+        } else if (error.status === 400) {
+          this.alertMessage = 'Login failed: Invalid information provided. Please check your credentials.';
+        } else if (error.status >= 500) {
+          this.alertMessage = 'Server error: Login service is temporarily unavailable. Please try again later.';
+        } else {
+          this.alertMessage = 'Login failed: An unexpected error occurred. Please try again.';
+        }
+      }
+    });
+  }
 }

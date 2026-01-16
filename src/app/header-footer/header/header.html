@@ -12,31 +12,58 @@
   </nav>
 
   <div class="header__actions">
-    <button class="btn login">Login</button>
-    <button class="btn register">Register</button>
+    @if (!authService.isAuthenticated()) {
+      <button class="btn login" (click)="router.navigate(['/login'])">Login</button>
+      <button class="btn register" (click)="router.navigate(['/register'])">Register</button>
+    } @else {
+      <div class="user-menu">
+        <a routerLink="/profile" class="user-avatar-link">
+          @if (authService.getUser()?.avatar) {
+            <img [src]="authService.getUser().avatar" [alt]="authService.getUser().firstName" class="user-avatar" />
+          } @else {
+            <div class="default-avatar">{{ getUserInitials() }}</div>
+          }
+        </a>
+        <div class="user-dropdown">
+          <a routerLink="/profile">My Profile</a>
+          <a (click)="logout()">Logout</a>
+        </div>
+      </div>
+    }
   </div>
 
   <!-- Burger Button -->
-  <button class="burger-menu" (click)="toggleMenu()" [class.active]="menuOpen" aria-label="Toggle menu" [attr.aria-expanded]="menuOpen">
+  <button class="burger-menu" (click)="toggleMenu()" [class.active]="isMenuOpen" aria-label="Toggle menu" [attr.aria-expanded]="isMenuOpen">
     <span></span>
     <span></span>
     <span></span>
   </button>
 
   <!-- Mobile Menu -->
-  <div class="mobile-menu" [class.active]="menuOpen">
+  <div class="mobile-menu" [class.active]="isMenuOpen">
     <nav class="mobile-nav">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleMenu()">Home</a>
-      <a routerLink="/rooms" routerLinkActive="active" (click)="toggleMenu()">Rooms</a>
-      <a routerLink="/hotels" routerLinkActive="active" (click)="toggleMenu()">Hotels</a>
-      <a routerLink="/bookedrooms" routerLinkActive="active" (click)="toggleMenu()">Booked Rooms</a>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a>
+      <a routerLink="/rooms" routerLinkActive="active" (click)="closeMenu()">Rooms</a>
+      <a routerLink="/hotels" routerLinkActive="active" (click)="closeMenu()">Hotels</a>
+      <a routerLink="/bookedrooms" routerLinkActive="active" (click)="closeMenu()">Booked Rooms</a>
     </nav>
     <div class="mobile-actions">
-      <button class="btn login" (click)="toggleMenu()">Login</button>
-      <button class="btn register" (click)="toggleMenu()">Register</button>
+      @if (!authService.isAuthenticated()) {
+        <button class="btn login" (click)="router.navigate(['/login']); closeMenu()">Login</button>
+        <button class="btn register" (click)="router.navigate(['/register']); closeMenu()">Register</button>
+      } @else {
+        <a routerLink="/profile" class="btn login" (click)="closeMenu()">
+          @if (authService.getUser()?.avatar) {
+            <img [src]="authService.getUser().avatar" [alt]="authService.getUser().firstName" class="user-avatar" />
+          } @else {
+            <div class="default-avatar">{{ getUserInitials() }}</div>
+          }
+        </a>
+        <button class="btn register" (click)="logout(); closeMenu()">Logout</button>
+      }
     </div>
   </div>
 
   <!-- Overlay -->
-  <div class="menu-overlay" [class.active]="menuOpen" (click)="toggleMenu()"></div>
+  <div class="menu-overlay" [class.active]="isMenuOpen" (click)="closeMenu()"></div>
 </header>

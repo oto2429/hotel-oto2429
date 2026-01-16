@@ -1,0 +1,152 @@
+.signin-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #f4f8ff, #eaf1ff);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.signin-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 70, 255, 0.12);
+}
+
+.signin-header {
+  text-align: center;
+  margin-bottom: 35px;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+  }
+
+  p {
+    color: #555;
+    font-size: 1rem;
+  }
+}
+
+.alert {
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+
+  &.success {
+    background: #e6f0ff;
+    color: #0a3cff;
+  }
+
+  &.error {
+    background: #ffecec;
+    color: #d10000;
+  }
+}
+
+.field {
+  margin-bottom: 22px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #000;
+  }
+
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1.8px solid #dbe3ff;
+    font-size: 1rem;
+    transition: all 0.25s ease;
+    background: #fff;
+
+    &:focus {
+      outline: none;
+      border-color: #3366ff;
+      box-shadow: 0 0 0 4px rgba(51, 102, 255, 0.15);
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+  }
+}
+
+.signin-btn {
+  width: 100%;
+  padding: 16px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #3366ff, #003cff);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(0, 60, 255, 0.35);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #ffffff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.signup-link {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e1e5e9;
+  text-align: center;
+
+  p {
+    color: #555;
+
+    a {
+      color: #3366ff;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .signin-card {
+    padding: 30px 20px;
+  }
+}
